@@ -5,7 +5,6 @@ public class TennisGame1 implements TennisGame {
     private int player2Score = 0;
     private String player1Name;
     private String player2Name;
-    private final int ONE_POINT = 1;
 
     public TennisGame1(String player1Name, String player2Name) {
         this.player1Name = player1Name;
@@ -14,11 +13,11 @@ public class TennisGame1 implements TennisGame {
 
     public void wonPoint(String playerName) {
         if (playerName == player1Name) {
-            player1Score += ONE_POINT;
+            player1Score++;
             return;
         }
 
-        player2Score += ONE_POINT;
+        player2Score++;
     }
 
     public String getScore() {
