@@ -1,0 +1,68 @@
+#!/bin/bash
+
+function ensure::jq() {
+    REQUIRED_PKG=jq
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
+    echo "Checking for $REQUIRED_PKG {STATUS}: $PKG_OK"
+    if [ "" = "$PKG_OK" ]; then
+      echo "⛔ No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
+      sudo apt-get --yes install $REQUIRED_PKG
+    fi
+}
+
+function ensure::curl() {
+    REQUIRED_PKG=curl
+    PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $REQUIRED_PKG|grep "install ok installed")
+    echo "Checking for $REQUIRED_PKG {STATUS}: $PKG_OK"
+    if [ "" = "$PKG_OK" ]; then
+      echo "⛔ No $REQUIRED_PKG. Setting up $REQUIRED_PKG."
+      sudo apt-get --yes install $REQUIRED_PKG
+    fi
+}
+
+function ensure::formatter() {
+  if [ "$(ls -A $HOME/.cache/google-java-format-git-pre-commit-hook)" ]; then
+    echo "👍 We have the formatter on the cache ♻️"
+  else
+    echo "⬇️ Downloading formatter"
+    REPO=google/google-java-format
+    JAR_URL=$(curl -s https://api.github.com/repos/${REPO}/releases/latest | jq -r '.assets[0].browser_download_url')
+    JAR_NAME=$(echo ${JAR_URL##*/})
+    CACHE_DIR="$HOME/.cache/google-java-format-git-pre-commit-hook"
+    JAR_FILE="$CACHE_DIR/$JAR_NAME"
+    if [[ ! -f "$JAR_FILE" ]]
+    then
+        echo "Setting up google-java-format"
+        mkdir -p "$CACHE_DIR"
+        curl -L "$JAR_URL" -o "$JAR_FILE"
+        sudo chmod +x $JAR_FILE;
+    fi
+  fi
+}
+
+ensure::jq
+ensure::curl
+ensure::formatter
+
+echo "====================================="
+echo " ☕️ Running pre-commit code formatter"
+echo "====================================="
+
+changed_java_files=$(git diff --cached --name-only --diff-filter=ACMR | grep ".*java$" || true)
+if [[ -n "$changed_java_files" ]]
+then
+    JAR_FILE=$HOME/.cache/google-java-format-git-pre-commit-hook/$(ls -1 $HOME/.cache/google-java-format-git-pre-commit-hook)
+    echo "🗃️: The following files will checked and reformatted:"
+    echo "$changed_java_files"
+    echo "Using pre-commit library $JAR_FILE"
+    if ! java -jar "${JAR_FILE}" --replace --set-exit-if-changed $changed_java_files
+    then
+        echo "\n♻✍️: Some files were reformatted"
+    else
+        echo "✅️ All good!"
+    fi
+    git add $changed_java_files
+else
+    echo "✅️ All good!"
+fi
+echo "=================================="
