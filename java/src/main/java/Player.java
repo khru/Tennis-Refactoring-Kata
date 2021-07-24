@@ -23,8 +23,8 @@ public class Player {
     return this.name;
   }
 
-  public boolean isDrawScore(Player player) {
-    return this.score == player.score;
+  public static boolean isDrawScore(Player player1, Player player2) {
+    return player1.score == player2.score;
   }
 
   public boolean isGamePoint() {

@@ -1,4 +1,3 @@
-
 public class TennisGame1 implements TennisGame {
 
   private static final String ADVANTAGE_MESSAGE = "Advantage ";
@@ -21,7 +20,7 @@ public class TennisGame1 implements TennisGame {
   }
 
   public String getScore() {
-    if (isDrawScore(player1, player2)) {
+    if (Player.isDrawScore(player1, player2)) {
       return getTiedScore(player1.score());
     }
 
@@ -30,10 +29,6 @@ public class TennisGame1 implements TennisGame {
     }
 
     return getDefaultScore();
-  }
-
-  private boolean isDrawScore(Player player1, Player player2) {
-    return player1.isDrawScore(player2);
   }
 
   private boolean isGamePoint() {
