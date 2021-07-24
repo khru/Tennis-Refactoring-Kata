@@ -19,10 +19,6 @@ public class Player {
     return this.score;
   }
 
-  public String name() {
-    return this.name;
-  }
-
   public static boolean isDrawScore(Player player1, Player player2) {
     return player1.score == player2.score;
   }
