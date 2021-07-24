@@ -1,12 +1,9 @@
-import java.util.Map;
 
 public class TennisGame1 implements TennisGame {
 
   private static final String ADVANTAGE_MESSAGE = "Advantage ";
   private static final String WINN_MESSAGE = "Win for ";
-  private static final Map<Integer, String> DEFAULT_SCORES =
-      Map.of(0, "Love", 1, "Fifteen", 2, "Thirty", 3, "Forty");
-
+  private static final int ADVANTAGE_POINTS = 1;
   private final Player player1;
   private final Player player2;
 
@@ -44,19 +41,13 @@ public class TennisGame1 implements TennisGame {
   }
 
   private String getDefaultScore() {
-    return getScoreByPlayer(player1.score()) + "-" + getScoreByPlayer(player2.score());
-  }
-
-  private String getScoreByPlayer(int playerScore) {
-    return DEFAULT_SCORES.get(playerScore);
+    return player1.getDefaultScore() + "-" + player2.getDefaultScore();
   }
 
   private String getGameScore() {
-
     String winningPlayer = Player.getWinningPlayerName(player1, player2);
-    int scoreDifference = Player.getDifferenceScore(player1, player2);
 
-    if (scoreDifference == 1) {
+    if (Player.getDifferenceScore(player1, player2) == ADVANTAGE_POINTS) {
       return ADVANTAGE_MESSAGE + winningPlayer;
     }
 
