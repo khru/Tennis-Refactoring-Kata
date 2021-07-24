@@ -36,6 +36,10 @@ public class Player {
     }
   }
 
+  public boolean equals(String name) {
+    return this.name.equals(name);
+  }
+
   public static String getWinningPlayerName(Player player1, Player player2) {
     return player1.score > player2.score ? player1.name : player2.name;
   }
@@ -46,9 +50,5 @@ public class Player {
 
   public static int getDifferenceScore(Player player1, Player player2) {
     return Math.abs(player1.score - player2.score);
-  }
-
-  public boolean equals(String name) {
-    return this.name.equals(name);
   }
 }

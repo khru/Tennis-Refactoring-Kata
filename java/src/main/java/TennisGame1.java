@@ -31,10 +31,6 @@ public class TennisGame1 implements TennisGame {
     return getDefaultScore();
   }
 
-  private boolean isGamePoint() {
-    return player1.isGamePoint() || player2.isGamePoint();
-  }
-
   private String getDefaultScore() {
     return player1.getDefaultScore() + "-" + player2.getDefaultScore();
   }
@@ -47,5 +43,9 @@ public class TennisGame1 implements TennisGame {
     }
 
     return WINN_MESSAGE + winningPlayer;
+  }
+
+  private boolean isGamePoint() {
+    return player1.isGamePoint() || player2.isGamePoint();
   }
 }
