@@ -27,6 +27,10 @@ public class Player {
     return this.score >= STARTING_GAME_POINT;
   }
 
+  public static String getWinningPlayerName(Player player1, Player player2) {
+    return player1.score > player2.score ? player1.name : player2.name;
+  }
+
   public boolean equals(String name) {
     return this.name.equals(name);
   }

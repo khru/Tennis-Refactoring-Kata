@@ -53,7 +53,7 @@ public class TennisGame1 implements TennisGame {
 
   private String getGameScore() {
 
-    String winningPlayer = getWinningPlayerName();
+    String winningPlayer = Player.getWinningPlayerName(player1, player2);
     int scoreDifference = getDifferenceScore();
 
     if (scoreDifference == 1) {
@@ -65,10 +65,6 @@ public class TennisGame1 implements TennisGame {
 
   private int getDifferenceScore() {
     return Math.abs(player1.score() - player2.score());
-  }
-
-  private String getWinningPlayerName() {
-    return this.player1.score() > this.player2.score() ? this.player1.name() : this.player2.name();
   }
 
   private static String getTiedScore(int player1Score) {
