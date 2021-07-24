@@ -60,10 +60,10 @@ public class TennisGame1 implements TennisGame {
     String ADVANTAGE_MESSAGE = "Advantage ";
     String WINN_MESSAGE = "Win for ";
     int minusResult = getDifferentScore();
-    if (minusResult == 1) score = ADVANTAGE_MESSAGE + "player1";
-    else if (minusResult == -1) score = ADVANTAGE_MESSAGE + "player2";
-    else if (minusResult >= 2) score = WINN_MESSAGE + "player1";
-    else score = WINN_MESSAGE + "player2";
+    if (minusResult == 1) score = ADVANTAGE_MESSAGE + player1Name;
+    else if (minusResult == -1) score = ADVANTAGE_MESSAGE + player2Name;
+    else if (minusResult >= 2) score = WINN_MESSAGE + player1Name;
+    else score = WINN_MESSAGE + player2Name;
     return score;
   }
 
