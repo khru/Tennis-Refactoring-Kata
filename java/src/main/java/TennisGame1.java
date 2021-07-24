@@ -1,5 +1,7 @@
 public class TennisGame1 implements TennisGame {
 
+  private static final String ADVANTAGE_MESSAGE = "Advantage ";
+  private static final String WINN_MESSAGE = "Win for ";
   private int player1Score = 0;
   private int player2Score = 0;
   private String player1Name;
@@ -22,10 +24,17 @@ public class TennisGame1 implements TennisGame {
   public String getScore() {
     if (player1Score == player2Score) {
       return getTiedScore(player1Score);
-    } else if (player1Score >= 4 || player2Score >= 4) {
-      return getAdvantageOrWinner();
     }
+
+    if (isGamePoint()) {
+      return getGameScore();
+    }
+
     return getScoreByPlayer();
+  }
+
+  private boolean isGamePoint() {
+    return player1Score >= 4 || player2Score >= 4;
   }
 
   private String getScoreByPlayer() {
@@ -55,20 +64,24 @@ public class TennisGame1 implements TennisGame {
     return score;
   }
 
-  private String getAdvantageOrWinner() {
-    String score;
-    String ADVANTAGE_MESSAGE = "Advantage ";
-    String WINN_MESSAGE = "Win for ";
-    int minusResult = getDifferentScore();
-    if (minusResult == 1) score = ADVANTAGE_MESSAGE + player1Name;
-    else if (minusResult == -1) score = ADVANTAGE_MESSAGE + player2Name;
-    else if (minusResult >= 2) score = WINN_MESSAGE + player1Name;
-    else score = WINN_MESSAGE + player2Name;
-    return score;
+  private String getGameScore() {
+
+    String winningPlayer = getWinningPlayerName();
+    int scoreDifference = getDifferenceScore();
+
+    if (scoreDifference == 1) {
+      return ADVANTAGE_MESSAGE + winningPlayer;
+    }
+
+    return WINN_MESSAGE + winningPlayer;
   }
 
-  private int getDifferentScore() {
-    return player1Score - player2Score;
+  private int getDifferenceScore() {
+    return Math.abs(player1Score - player2Score);
+  }
+
+  private String getWinningPlayerName() {
+    return this.player1Score > this.player2Score ? this.player1Name : this.player2Name;
   }
 
   private static String getTiedScore(int player1Score) {
