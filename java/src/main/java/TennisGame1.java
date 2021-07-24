@@ -8,8 +8,8 @@ public class TennisGame1 implements TennisGame {
       Map.of(0, "Love", 1, "Fifteen", 2, "Thirty", 3, "Forty");
   private int player1Score = 0;
   private int player2Score = 0;
-  private String player1Name;
-  private String player2Name;
+  private final String player1Name;
+  private final String player2Name;
 
   public TennisGame1(String player1Name, String player2Name) {
     this.player1Name = player1Name;
