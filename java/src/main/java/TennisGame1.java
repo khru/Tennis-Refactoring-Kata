@@ -54,17 +54,13 @@ public class TennisGame1 implements TennisGame {
   private String getGameScore() {
 
     String winningPlayer = Player.getWinningPlayerName(player1, player2);
-    int scoreDifference = getDifferenceScore();
+    int scoreDifference = Player.getDifferenceScore(player1, player2);
 
     if (scoreDifference == 1) {
       return ADVANTAGE_MESSAGE + winningPlayer;
     }
 
     return WINN_MESSAGE + winningPlayer;
-  }
-
-  private int getDifferenceScore() {
-    return Math.abs(player1.score() - player2.score());
   }
 
   private static String getTiedScore(int player1Score) {
