@@ -21,7 +21,7 @@ public class TennisGame1 implements TennisGame {
 
   public String getScore() {
     if (Player.isDrawScore(player1, player2)) {
-      return getTiedScore(player1.score());
+      return player1.getTiedScore();
     }
 
     if (isGamePoint()) {
@@ -47,18 +47,5 @@ public class TennisGame1 implements TennisGame {
     }
 
     return WINN_MESSAGE + winningPlayer;
-  }
-
-  private static String getTiedScore(int player1Score) {
-    switch (player1Score) {
-      case 0:
-        return "Love-All";
-      case 1:
-        return "Fifteen-All";
-      case 2:
-        return "Thirty-All";
-      default:
-        return "Deuce";
-    }
   }
 }
