@@ -16,7 +16,7 @@ public class TennisGame1 implements TennisGame {
   }
 
   public void wonPoint(String playerName) {
-    if (playerName.equals(player1.name())) {
+    if (player1.equals(playerName)) {
       this.player1.addPoint();
       return;
     }
@@ -40,7 +40,7 @@ public class TennisGame1 implements TennisGame {
   }
 
   private boolean isGamePoint() {
-    return player1.score() >= 4 || player2.score() >= 4;
+    return player1.isGamePoint() || player2.isGamePoint();
   }
 
   private String getDefaultScore() {
