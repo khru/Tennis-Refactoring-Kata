@@ -1,7 +1,11 @@
+import java.util.Map;
+
 public class TennisGame1 implements TennisGame {
 
   private static final String ADVANTAGE_MESSAGE = "Advantage ";
   private static final String WINN_MESSAGE = "Win for ";
+  private static final Map<Integer, String> DEFAULT_SCORES =
+      Map.of(0, "Love", 1, "Fifteen", 2, "Thirty", 3, "Forty");
   private int player1Score = 0;
   private int player2Score = 0;
   private String player1Name;
@@ -30,38 +34,19 @@ public class TennisGame1 implements TennisGame {
       return getGameScore();
     }
 
-    return getScoreByPlayer();
+    return getDefaultScore();
   }
 
   private boolean isGamePoint() {
     return player1Score >= 4 || player2Score >= 4;
   }
 
-  private String getScoreByPlayer() {
-    String score = "";
-    int tempScore;
-    for (int i = 1; i < 3; i++) {
-      if (i == 1) tempScore = player1Score;
-      else {
-        score += "-";
-        tempScore = player2Score;
-      }
-      switch (tempScore) {
-        case 0:
-          score += "Love";
-          break;
-        case 1:
-          score += "Fifteen";
-          break;
-        case 2:
-          score += "Thirty";
-          break;
-        case 3:
-          score += "Forty";
-          break;
-      }
-    }
-    return score;
+  private String getDefaultScore() {
+    return getScoreByPlayer(player1Score) + "-" + getScoreByPlayer(player2Score);
+  }
+
+  private String getScoreByPlayer(int playerScore) {
+    return DEFAULT_SCORES.get(playerScore);
   }
 
   private String getGameScore() {
