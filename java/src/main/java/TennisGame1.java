@@ -11,7 +11,7 @@ public class TennisGame1 implements TennisGame {
   }
 
   public void wonPoint(String playerName) {
-    if (playerName == player1Name) {
+    if (playerName.equals(player1Name)) {
       player1Score++;
       return;
     }
