@@ -57,12 +57,18 @@ public class TennisGame1 implements TennisGame {
 
   private String getAdvantageOrWinner() {
     String score;
-    int minusResult = player1Score - player2Score;
-    if (minusResult == 1) score = "Advantage player1";
-    else if (minusResult == -1) score = "Advantage player2";
-    else if (minusResult >= 2) score = "Win for player1";
-    else score = "Win for player2";
+    String ADVANTAGE_MESSAGE = "Advantage ";
+    String WINN_MESSAGE = "Win for ";
+    int minusResult = getDifferentScore();
+    if (minusResult == 1) score = ADVANTAGE_MESSAGE + "player1";
+    else if (minusResult == -1) score = ADVANTAGE_MESSAGE + "player2";
+    else if (minusResult >= 2) score = WINN_MESSAGE + "player1";
+    else score = WINN_MESSAGE + "player2";
     return score;
+  }
+
+  private int getDifferentScore() {
+    return player1Score - player2Score;
   }
 
   private static String getTiedScore(int player1Score) {
