@@ -20,33 +20,36 @@ public class TennisGame1 implements TennisGame {
   }
 
   public String getScore() {
-    String score = "";
-    int tempScore = 0;
     if (player1Score == player2Score) {
-      score = getTiedScore(player1Score);
+      return getTiedScore(player1Score);
     } else if (player1Score >= 4 || player2Score >= 4) {
-      score = getAdvantageOrWinner();
-    } else {
-      for (int i = 1; i < 3; i++) {
-        if (i == 1) tempScore = player1Score;
-        else {
-          score += "-";
-          tempScore = player2Score;
-        }
-        switch (tempScore) {
-          case 0:
-            score += "Love";
-            break;
-          case 1:
-            score += "Fifteen";
-            break;
-          case 2:
-            score += "Thirty";
-            break;
-          case 3:
-            score += "Forty";
-            break;
-        }
+      return getAdvantageOrWinner();
+    }
+    return getScoreByPlayer();
+  }
+
+  private String getScoreByPlayer() {
+    String score = "";
+    int tempScore;
+    for (int i = 1; i < 3; i++) {
+      if (i == 1) tempScore = player1Score;
+      else {
+        score += "-";
+        tempScore = player2Score;
+      }
+      switch (tempScore) {
+        case 0:
+          score += "Love";
+          break;
+        case 1:
+          score += "Fifteen";
+          break;
+        case 2:
+          score += "Thirty";
+          break;
+        case 3:
+          score += "Forty";
+          break;
       }
     }
     return score;
