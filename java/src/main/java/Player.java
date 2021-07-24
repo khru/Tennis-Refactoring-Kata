@@ -15,10 +15,6 @@ public class Player {
     this.score++;
   }
 
-  public int score() {
-    return this.score;
-  }
-
   public boolean isGamePoint() {
     return this.score >= STARTING_GAME_POINT;
   }
