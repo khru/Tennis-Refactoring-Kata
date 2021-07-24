@@ -6,28 +6,26 @@ public class TennisGame1 implements TennisGame {
   private static final String WINN_MESSAGE = "Win for ";
   private static final Map<Integer, String> DEFAULT_SCORES =
       Map.of(0, "Love", 1, "Fifteen", 2, "Thirty", 3, "Forty");
-  private int player1Score = 0;
-  private int player2Score = 0;
-  private final String player1Name;
-  private final String player2Name;
+
+  private final Player player1;
+  private final Player player2;
 
   public TennisGame1(String player1Name, String player2Name) {
-    this.player1Name = player1Name;
-    this.player2Name = player2Name;
+    this.player1 = new Player(player1Name);
+    this.player2 = new Player(player2Name);
   }
 
   public void wonPoint(String playerName) {
-    if (playerName.equals(player1Name)) {
-      player1Score++;
+    if (playerName.equals(player1.name())) {
+      this.player1.addPoint();
       return;
     }
-
-    player2Score++;
+    this.player2.addPoint();
   }
 
   public String getScore() {
-    if (player1Score == player2Score) {
-      return getTiedScore(player1Score);
+    if (isDrawScore(player1, player2)) {
+      return getTiedScore(player1.score());
     }
 
     if (isGamePoint()) {
@@ -37,12 +35,16 @@ public class TennisGame1 implements TennisGame {
     return getDefaultScore();
   }
 
+  private boolean isDrawScore(Player player1, Player player2) {
+    return player1.isDrawScore(player2);
+  }
+
   private boolean isGamePoint() {
-    return player1Score >= 4 || player2Score >= 4;
+    return player1.score() >= 4 || player2.score() >= 4;
   }
 
   private String getDefaultScore() {
-    return getScoreByPlayer(player1Score) + "-" + getScoreByPlayer(player2Score);
+    return getScoreByPlayer(player1.score()) + "-" + getScoreByPlayer(player2.score());
   }
 
   private String getScoreByPlayer(int playerScore) {
@@ -62,11 +64,11 @@ public class TennisGame1 implements TennisGame {
   }
 
   private int getDifferenceScore() {
-    return Math.abs(player1Score - player2Score);
+    return Math.abs(player1.score() - player2.score());
   }
 
   private String getWinningPlayerName() {
-    return this.player1Score > this.player2Score ? this.player1Name : this.player2Name;
+    return this.player1.score() > this.player2.score() ? this.player1.name() : this.player2.name();
   }
 
   private static String getTiedScore(int player1Score) {
